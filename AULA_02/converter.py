@@ -70,6 +70,34 @@ def normalizar_texto(texto: str) -> str:
     return re.sub(r"\s+", " ", texto).strip()
 
 
+def construir_contexto_metadata(conteudo_markdown: str) -> str:
+    linhas = conteudo_markdown.splitlines()
+    cabecalho = "\n".join(linhas[:80])
+    rodape = "\n".join(linhas[-40:])
+
+    linhas_relevantes: list[str] = []
+    padrao = re.compile(
+        r"doi|recebido|revisado|aprovado|aceito|publicado|published|journal|revista",
+        flags=re.IGNORECASE,
+    )
+
+    for linha in linhas:
+        if padrao.search(linha):
+            linhas_relevantes.append(linha)
+
+    linhas_relevantes = linhas_relevantes[:30]
+
+    partes = [
+        "=== CABECALHO DO DOCUMENTO ===",
+        cabecalho,
+        "=== LINHAS BIBLIOGRAFICAS E EDITORIAIS ===",
+        "\n".join(linhas_relevantes),
+        "=== RODAPE DO DOCUMENTO ===",
+        rodape,
+    ]
+    return "\n".join(partes)
+
+
 def linha_eh_secao(linha: str) -> bool:
     secoes = {
         "resumo",
@@ -167,17 +195,22 @@ def chamar_structured_outputs(
     nome_arquivo: str,
     config: dict[str, str],
 ) -> dict[str, Any]:
+    contexto_metadata = construir_contexto_metadata(conteudo_markdown)
+
     prompt_sistema = (
         "Voce extrai metadados bibliograficos de artigos em Markdown. "
         "Retorne apenas os campos do schema. "
         "Use o titulo principal do artigo, a lista de autores e o ano de publicacao. "
+        "Use apenas evidencias do cabecalho, DOI, notas editoriais e rodape. "
+        "Nunca use anos de referencias bibliograficas ou citacoes do corpo do texto como ano do artigo. "
         "Se o ano nao puder ser determinado com seguranca, retorne null."
     )
 
     prompt_usuario = (
         f"Arquivo: {nome_arquivo}\n"
-        "Extraia os metadados do documento abaixo.\n\n"
-        f"{conteudo_markdown[:16000]}"
+        "Extraia os metadados do documento abaixo.\n"
+        "Priorize o ano do DOI, linha de publicacao ou datas editoriais do proprio artigo.\n\n"
+        f"{contexto_metadata}"
     )
 
     payload = {
@@ -315,17 +348,32 @@ def extrair_autores_heuristico(linhas: list[str], titulo: str) -> list[str]:
 
 
 def extrair_ano_heuristico(conteudo: str) -> int | None:
+    contexto = construir_contexto_metadata(conteudo)
+
+    padrao_doi_ano = re.search(
+        r"doi[:\s]+[^\n]*?(19\d{2}|20\d{2})",
+        contexto,
+        flags=re.IGNORECASE,
+    )
+    if padrao_doi_ano:
+        return int(padrao_doi_ano.group(1))
+
     padrao_publicacao = re.search(
-        r"(publicado em|aceito em|aprovado em|received in|published in)[^\d]*(19\d{2}|20\d{2})",
-        conteudo,
+        r"(publicado em|publicada em|published in|published on)[^\d]*(19\d{2}|20\d{2})",
+        contexto,
         flags=re.IGNORECASE,
     )
     if padrao_publicacao:
         return int(padrao_publicacao.group(2))
 
-    anos = [int(ano) for ano in re.findall(r"\b(19\d{2}|20\d{2})\b", conteudo[:4000])]
-    if anos:
-        return max(anos)
+    editorial_matches = re.findall(
+        r"(recebido|revisado|aprovado|aceito|published|publicado)[^\d]*(19\d{2}|20\d{2})",
+        contexto,
+        flags=re.IGNORECASE,
+    )
+    anos_editoriais = [int(ano) for _, ano in editorial_matches]
+    if anos_editoriais and len(set(anos_editoriais)) == 1:
+        return anos_editoriais[0]
 
     return None
 
