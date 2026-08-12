@@ -1,0 +1,14 @@
+{
+  "test_id": 10,
+  "strategy": "markdown_headers",
+  "chunk_size": null,
+  "chunk_overlap": 0,
+  "num_chunks": 123,
+  "avg_chunk_size": 910.15,
+  "min_chunk_size": 16,
+  "max_chunk_size": 997,
+  "overlap_chunks": 0,
+  "overlap_percent": 0,
+  "total_tokens": 34343,
+  "embedding_dimension": 1536
+}

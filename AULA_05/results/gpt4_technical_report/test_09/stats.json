@@ -1,0 +1,14 @@
+{
+  "test_id": 9,
+  "strategy": "recursive",
+  "chunk_size": 500,
+  "chunk_overlap": 50,
+  "num_chunks": 751,
+  "avg_chunk_size": 359.28,
+  "min_chunk_size": 18,
+  "max_chunk_size": 499,
+  "overlap_chunks": 750,
+  "overlap_percent": 10.0,
+  "total_tokens": 71789,
+  "embedding_dimension": 1536
+}

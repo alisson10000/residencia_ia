@@ -1,0 +1,14 @@
+{
+  "test_id": 4,
+  "strategy": "fixed_2000",
+  "chunk_size": 2000,
+  "chunk_overlap": 0,
+  "num_chunks": 27,
+  "avg_chunk_size": 1959,
+  "min_chunk_size": 903,
+  "max_chunk_size": 2000,
+  "overlap_chunks": 0,
+  "overlap_percent": 0.0,
+  "total_tokens": 15448,
+  "embedding_dimension": 1536
+}

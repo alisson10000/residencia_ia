@@ -1,0 +1,14 @@
+{
+  "test_id": 8,
+  "strategy": "three_sentences",
+  "chunk_size": null,
+  "chunk_overlap": 0,
+  "num_chunks": 288,
+  "avg_chunk_size": 316.91,
+  "min_chunk_size": 13,
+  "max_chunk_size": 4370,
+  "overlap_chunks": 0,
+  "overlap_percent": 0,
+  "total_tokens": 27755,
+  "embedding_dimension": 1536
+}
