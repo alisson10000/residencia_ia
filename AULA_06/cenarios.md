@@ -1092,7 +1092,7 @@ flowchart TD
     F -- Não --> H[Limpar e normalizar]
     G --> H
     H --> I[Preservar comandos, tabelas<br/>e blocos de código]
-    I --> J[Adicionar metadados:<br/>projeto, ambiente, versão e categoria]
+    I --> J[Adicionar metadados:<br/>projeto,<br /> ambiente, versão e categoria]
     J --> K[Chunking por seções]
     K --> L[Gerar embeddings com <br />Cohere Multilingual]
     L --> M[Salvar no banco vetorial]
