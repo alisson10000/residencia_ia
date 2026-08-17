@@ -1094,7 +1094,7 @@ flowchart TD
     H --> I[Preservar comandos, tabelas<br/>e blocos de código]
     I --> J[Adicionar metadados:<br/>projeto, ambiente, versão e categoria]
     J --> K[Chunking por seções]
-    K --> L[Gerar embeddings com Cohere Multilingual]
+    K --> L[Gerar embeddings com <br />Cohere Multilingual]
     L --> M[Salvar no banco vetorial]
     D -- Não --> N[Não indexar documento]
     M --> O[Usuário acessa o chat]
