@@ -562,25 +562,25 @@ Por isso escolhi chunks aproximadamente entre 250 e 400 tokens.
 
 ```mermaid
 flowchart TD
-    A[Paciente envia reflexão ou terapeuta adiciona registro] --> B[Dados são armazenados no banco do EloMind]
+    A[Paciente envia reflexão<br/>ou terapeuta adiciona registro] --> B[Dados são armazenados<br/>no banco do EloMind]
     B --> C[Extrair conteúdo textual]
     C --> D[Limpar e normalizar texto]
-    D --> E[Adicionar metadados: patient_id, therapist_id, tipo e data]
+    D --> E[Adicionar metadados:<br/>patient_id, therapist_id, tipo e data]
     E --> F[Dividir conteúdo em chunks]
     F --> G[Gerar embeddings com Multilingual-E5-Large]
-    G --> H[Salvar vetores e metadados no banco vetorial]
+    G --> H[Salvar vetores e metadados<br/>no banco vetorial]
     H --> I[Terapeuta acessa a interface web]
     I --> J[Seleciona paciente e faz uma pergunta]
-    J --> K[API valida terapeuta e permissão de acesso]
+    J --> K[API valida terapeuta<br/>e permissão de acesso]
     K --> L[Aplicar filtros de patient_id e therapist_id]
     L --> M[Gerar embedding da pergunta]
     M --> N[Pesquisar chunks mais semelhantes]
     N --> O[Recuperar trechos relevantes]
     O --> P[Enviar pergunta + contexto para o LLM]
     P --> Q{Há informações suficientes?}
-    Q -- Sim --> R[LLM gera resposta baseada nos registros]
+    Q -- Sim --> R[LLM gera resposta<br/>baseada nos registros]
     R --> S[Apresentar resposta + fontes]
-    Q -- Não --> T[Informar que não foram encontrados registros suficientes]
+    Q -- Não --> T[Informar que não foram encontrados<br/>registros suficientes]
 ```
 
 ### Tabela de decisões
@@ -1084,31 +1084,31 @@ Um chunk maior poderia ser truncado.
 ```mermaid
 flowchart TD
     A[Documentação técnica] --> B[PDF, Markdown, HTML, DOCX, APIs e manuais]
-    B --> C[Verificar arquivos proibidos e informações sensíveis]
+    B --> C[Verificar arquivos proibidos<br/>e informações sensíveis]
     C --> D{Documento permitido?}
     D -- Sim --> E[Extrair conteúdo]
     E --> F{PDF digitalizado?}
     F -- Sim --> G[Executar OCR]
     F -- Não --> H[Limpar e normalizar]
     G --> H
-    H --> I[Preservar comandos, tabelas e blocos de código]
-    I --> J[Adicionar metadados: projeto, ambiente, versão e categoria]
+    H --> I[Preservar comandos, tabelas<br/>e blocos de código]
+    I --> J[Adicionar metadados:<br/>projeto, ambiente, versão e categoria]
     J --> K[Chunking por seções]
     K --> L[Gerar embeddings com Cohere Multilingual]
     L --> M[Salvar no banco vetorial]
     D -- Não --> N[Não indexar documento]
     M --> O[Usuário acessa o chat]
     O --> P[Usuário faz pergunta]
-    P --> Q[Identificar projeto, ambiente e intenção]
+    P --> Q[Identificar projeto,<br/>ambiente e intenção]
     Q --> R[Aplicar filtros]
     R --> S[Gerar embedding da pergunta]
     S --> T[Busca vetorial]
     T --> U[Recuperar chunks relevantes]
-    U --> V[Enviar pergunta + documentos para o LLM]
+    U --> V[Enviar pergunta + documentos<br/>para o LLM]
     V --> W{Documentação encontrada?}
     W -- Sim --> X[Gerar resposta]
-    X --> Y[Mostrar resposta + fonte + versão + seção]
-    W -- Não --> Z[Informar que não encontrou informação suficiente]
+    X --> Y[Mostrar resposta + fonte<br/>+ versão + seção]
+    W -- Não --> Z[Informar que não encontrou<br/>informação suficiente]
 ```
 
 ### Tabela de decisões
