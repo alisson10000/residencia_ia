@@ -681,37 +681,37 @@ Exemplo de resposta segura:
 
 ```mermaid
 flowchart TD
-    A[Paciente ou terapeuta gera novo registro] --> B[Camada de ingestão]
+    A[Paciente ou terapeuta<br /> gera novo registro] --> B[Camada de ingestão]
     B --> C{Documento elegível para indexação?}
-    C -- Não --> C1[Rejeita, registra motivo e audita]
-    C -- Sim --> D[Extração de texto, OCR ou transcrição]
+    C -- Não --> C1[Rejeita, registra<br /> motivo e audita]
+    C -- Sim --> D[Extração de texto, OCR<br /> ou transcrição]
     D --> E[Limpeza e normalização]
     E --> F[Enriquecimento semântico]
-    F --> G[Schema do documento + metadados]
+    F --> G[Schema do documento <br />+ metadados]
     G --> H[Chunking semântico]
-    H --> I[Contagem de tokens e overlap controlado]
-    I --> J[Embeddings text-embedding-3-large]
+    H --> I[Contagem de tokens e<br /> overlap controlado]
+    I --> J[Embeddings <br />text-embedding-3-large]
     J --> K[Índice vetorial]
     H --> L[Índice lexical BM25]
-    G --> M[Catálogo documental e versionamento]
+    G --> M[Catálogo documental<br /> e versionamento]
 
     N[Terapeuta faz pergunta] --> O[Autenticação e autorização]
     O --> P[Classificador de intenção]
     P --> Q{SQL, RAG ou híbrido?}
     Q -- SQL --> R[Consulta estruturada]
-    Q -- RAG --> S[Extrair filtros e reescrever consulta]
-    Q -- Híbrido --> T[SQL para recorte + RAG para interpretação]
+    Q -- RAG --> S[Extrair filtros e <br /> reescrever consulta]
+    Q -- Híbrido --> T[SQL para recorte<br /> + <br />RAG para interpretação]
 
     S --> U[Busca híbrida: vetorial + lexical]
     K --> U
     L --> U
     M --> U
     U --> V[Reranking]
-    V --> W[Parent-child retrieval e window retrieval]
+    V --> W[Parent-child retrieval <br />e window retrieval]
     W --> X[Contextual compression]
-    X --> Y[Prompt grounded com guardrails]
+    X --> Y[Prompt grounded<br /> com guardrails]
     Y --> Z[LLM gpt-5.6-terra ou gpt-5.6-sol]
-    Z --> AA[Validação de citação, escopo e segurança]
+    Z --> AA[Validação de citação,<br /> escopo e segurança]
     AA --> AB[Resposta final com fontes]
     R --> AB
     T --> AB
@@ -1157,19 +1157,19 @@ Exemplo de resposta segura:
 
 ```mermaid
 flowchart TD
-    A[Documentos técnicos de múltiplas fontes] --> B[Coleta e classificação]
-    B --> C[Scanner de segredos e conteúdo proibido]
-    C --> D{Documento pode ser indexado?}
+    A[Documentos técnicos <br />de múltiplas fontes] --> B[Coleta e classificação]
+    B --> C[Scanner de <br />segredos <br />e conteúdo proibido]
+    C --> D{Documento<br /> pode ser indexado?}
     D -- Não --> D1[Bloqueia, registra e notifica]
-    D -- Sim --> E[Parsing, OCR e preservação estrutural]
-    E --> F[Limpeza mantendo código, tabelas e comandos]
-    F --> G[Metadados: projeto, sistema, ambiente, versão, categoria]
+    D -- Sim --> E[Parsing,<br /> OCR<br /> e<br /> preservação estrutural]
+    E --> F[Limpeza mantendo<br /> código,<br /> tabelas e comandos]
+    F --> G[Metadados: projeto,<br /> sistema, <br />ambiente, <br />versão, categoria]
     G --> H[Chunking por seções técnicas]
     H --> I[Contagem de tokens e overlap]
     I --> J[Embeddings text-embedding-3-large]
     J --> K[Índice vetorial]
     H --> L[Índice lexical BM25]
-    G --> M[Catálogo documental, vigência e versionamento]
+    G --> M[Catálogo documental,<br /> vigência e versionamento]
 
     N[Usuário faz pergunta] --> O[Autenticação]
     O --> P[Classificação da intenção]
@@ -1180,12 +1180,12 @@ flowchart TD
     L --> S
     M --> S
     S --> T[Reranking]
-    T --> U[Parent-child retrieval e expansão de contexto]
+    T --> U[Parent-child retrieval <br />e expansão de contexto]
     U --> V[Contextual compression]
-    V --> W[Prompt grounded com guardrails]
+    V --> W[Prompt grounded <br />com guardrails]
     W --> X[LLM gpt-5.6-terra ou gpt-5.6-sol]
-    X --> Y[Validação de citação, ambiente e versão]
-    Y --> Z[Resposta final com passos, fontes e avisos]
+    X --> Y[Validação de citação,<br /> ambiente e versão]
+    Y --> Z[Resposta final com passos,<br /> fontes e avisos]
 ```
 
 ---
